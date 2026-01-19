@@ -1,0 +1,7 @@
+{
+  "name": "support-ticket-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

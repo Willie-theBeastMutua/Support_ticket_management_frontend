@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isAdmin ? 'Admin Dashboard' : 'My Tickets' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Status Filter -->
+  <ion-item>
+    <ion-label>Status Filter</ion-label>
+    <ion-select [formControl]="statusControl" (ionChange)="filterChanged()">
+      <ion-select-option value="">All</ion-select-option>
+      <ion-select-option value="1">OPEN</ion-select-option>
+      <ion-select-option value="2">IN_PROGRESS</ion-select-option>
+      <ion-select-option value="3">RESOLVED</ion-select-option>
+      <ion-select-option value="4">CLOSED</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Ticket List -->
+  <ion-list>
+    <ion-item *ngFor="let ticket of tickets" (click)="viewTicket(ticket.id)">
+      <ion-label>
+        <h2>{{ ticket.title }}</h2>
+        <p>
+          Ticket #: {{ ticket.ticketNumber }} |
+          Status: {{ ticket.TicketStatus?.name || 'N/A' }} |
+          Priority: {{ ticket.TicketPriority?.name || 'N/A' }}
+        </p>
+      </ion-label>
+      <ion-badge [color]="ticket.TicketPriority?.name?.toLowerCase() || 'medium'">
+        {{ ticket.TicketPriority?.name || 'Medium' }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <!-- Add Ticket FAB for non-admins -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="!isAdmin">
+    <ion-fab-button routerLink="/create-ticket">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Ticket</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="ticketForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input formControlName="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Priority</ion-label>
+      <ion-select formControlName="priorityId">
+        <ion-select-option value="1">LOW</ion-select-option>
+        <ion-select-option value="2">MEDIUM</ion-select-option>
+        <ion-select-option value="3">HIGH</ion-select-option>
+        <ion-select-option value="4">URGENT</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select formControlName="categoryId">
+        <ion-select-option value="1">ACCOUNT_ACCESS</ion-select-option>
+        <ion-select-option value="2">BILLING</ion-select-option>
+        <ion-select-option value="3">TECHNICAL</ion-select-option>
+        <ion-select-option value="4">FEATURE_REQUEST</ion-select-option>
+        <ion-select-option value="5">OTHER</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Create Ticket</ion-button>
+  </form>
+  <p style="color:red">{{error}}</p>
+</ion-content>

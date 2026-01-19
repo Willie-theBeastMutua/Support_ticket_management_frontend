@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ticket.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="ticket">
+  <h2>{{ticket.title}} (#{{ticket.ticketNumber}})</h2>
+  <p>{{ticket.description}}</p>
+  <p>Status: {{ticket.TicketStatus.name}} | Priority: {{ticket.TicketPriority.name}} | Category:
+    {{ticket.TicketCategory.name}}</p>
+
+  <ion-item *ngFor="let comment of ticket.TicketComments">
+    <ion-label>
+      <p>{{comment.content}} <small *ngIf="comment.isInternal">(Internal)</small></p>
+      <p>By User ID: {{comment.userId}} at {{comment.created_at}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-card *ngIf="isAdmin">
+    <form [formGroup]="updateForm" (ngSubmit)="updateTicket()">
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select formControlName="statusId">
+          <ion-select-option value="1">OPEN</ion-select-option>
+          <ion-select-option value="2">IN_PROGRESS</ion-select-option>
+          <ion-select-option value="3">RESOLVED</ion-select-option>
+          <ion-select-option value="4">CLOSED</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Assign To (Admin ID)</ion-label>
+        <ion-input formControlName="assignedTo" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Internal Note</ion-label>
+        <ion-textarea formControlName="internalNote"></ion-textarea>
+      </ion-item>
+
+      <ion-button expand="full" type="submit">Update Ticket</ion-button>
+    </form>
+  </ion-card>
+
+  <ion-card>
+    <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+      <ion-item>
+        <ion-label>Comment</ion-label>
+        <ion-textarea formControlName="content"></ion-textarea>
+      </ion-item>
+
+      <ion-item *ngIf="isAdmin">
+        <ion-label>Internal</ion-label>
+        <ion-checkbox formControlName="isInternal"></ion-checkbox>
+      </ion-item>
+
+      <ion-button expand="full" type="submit">Add Comment</ion-button>
+    </form>
+  </ion-card>
+</ion-content>
